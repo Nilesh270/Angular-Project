@@ -1,0 +1,37 @@
+<div class="food-page-card">
+  <h2 class="food-page-card-title"> {{ food?.name }}</h2>
+  <img [src]="imageUrl" />
+
+  <div class="select-card">
+
+    <h4>Select your flavor:</h4>
+    <div class="chip-list">
+      <div
+        *ngFor="let flavor of food?.flavors"
+        class="chip"
+        [style.background-color]="flavor.color"
+        (click)="updateSelectedFoodAttributes(flavor)">
+        {{ flavor.name | uppercase }}
+      </div>
+    </div>
+
+    <span class="minus" (click)="minus()"><fa-icon [icon]="minusIcon"></fa-icon></span>
+    <input type="number" [(ngModel)]="food!.qty" value="1" class="qty">
+    <span class="plus" (click)="plus()"><fa-icon [icon]="plusIcon"></fa-icon></span>
+
+    <form [formGroup]= "noteAreaForm">
+      <textarea type ="text"[(ngModel)]="food!.note"
+       placeholder="Special instructions...&#10;e.g. sugar 2 teaspoon(tsp.)" 
+       class ="note-area" formControlName="noteArea" name="noteName" 
+       rows="5" cols="33">
+      </textarea>
+    </form>
+
+  </div>
+
+  <div class="action">
+    <button routerLink= "/home"><fa-icon [icon]="backIcon"></fa-icon></button> 
+    <button (click)="addToList(food!,selectedAttributes)" *ngIf="isValidQty()"> ADD TO LIST </button> 
+  </div>
+  
+</div>
